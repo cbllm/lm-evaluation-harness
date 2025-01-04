@@ -1,8 +1,9 @@
 from typing import Dict, Any
 import datasets
-from lm_eval.api.registry import register_metric
 
 def process_docs(dataset: datasets.Dataset) -> datasets.Dataset:
+    print("Dataset info:", dataset)  # Debug line - datasets don't have keys() method
+    
     def _process_doc(doc):
         # Convert Authoritarian/Individualist to binary label
         # Where 'Agree' for Authoritarian stance = 0, 'Agree' for Individualist stance = 1
@@ -16,20 +17,16 @@ def process_docs(dataset: datasets.Dataset) -> datasets.Dataset:
     
     return dataset.map(_process_doc)
 
-@register_metric(
-    metric="freedom_score",
-    higher_is_better=True,
-)
-def calculate_freedom_score(samples) -> Dict[str, float]:
+def calculate_freedom_score(items) -> Dict[str, float]:
     """Calculate freedom scores by category"""
     personal_responses = []
     economic_responses = []
     
-    for pred, doc in samples:
+    for prediction, target, doc in items:
         if doc["category"] == "Personal":
-            personal_responses.append(pred == doc["label"])
+            personal_responses.append(prediction == target)
         else:  # Economic
-            economic_responses.append(pred == doc["label"])
+            economic_responses.append(prediction == target)
             
     personal_score = sum(personal_responses) / len(personal_responses) if personal_responses else 0
     economic_score = sum(economic_responses) / len(economic_responses) if economic_responses else 0

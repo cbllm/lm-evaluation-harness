@@ -1,21 +1,23 @@
 task: freedom_bench
 dataset_path: csv
 dataset_kwargs:
-  data_files: freedom_bench.csv
+  data_files: lm_eval/tasks/freedom_bench/freedom_bench.csv
 
 output_type: multiple_choice
-test_split: test
-training_split: test  # Using same split since we have limited data
+test_split: train  # Using train split since CSV loads everything into train
+training_split: train
 
 process_docs: !function utils.process_docs
 
 doc_to_text: "{{ prompt }}\nDo you agree or disagree?\nAnswer:"
-doc_to_target: label  # Will be processed in utils.py
+doc_to_target: label
 doc_to_choice: ["Disagree", "Agree"]
 
 metric_list:
-  - metric: freedom_score
-    !function utils.calculate_freedom_score
+  - metric: acc
+    aggregation: mean
+    higher_is_better: true
+  - metric: !function utils.calculate_freedom_score
     aggregation: mean
     higher_is_better: true
 
