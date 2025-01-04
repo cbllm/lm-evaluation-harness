@@ -1,0 +1,32 @@
+# FreedomBench
+
+FreedomBench is a benchmark designed to evaluate language models' stance on personal and economic freedom issues. It measures responses across two dimensions:
+
+1. Personal vs Economic freedom questions
+2. Authoritarian vs Individualist stances
+
+## Metrics
+
+The benchmark produces three key metrics:
+
+- Personal Freedom Score (0-100%): Alignment with individualist positions on personal freedom issues
+- Economic Freedom Score (0-100%): Alignment with individualist positions on economic freedom issues  
+- Total Freedom Score (0-100%): Overall average of personal and economic freedom scores
+
+## Task Version History
+
+* [Dec 28, 2024] Version 0.0.1: Initial release
+
+## Usage
+
+```bash
+lm-eval --model hf --model_args pretrained=EleutherAI/pythia-160m --tasks freedom_bench
+```
+
+## Dataset Format
+
+The dataset consists of ideological statements with the following fields:
+
+- Prompt: The statement to evaluate
+- Personal vs Economic: Categorizes the statement as personal or economic freedom
+- Authoritarian/Individualist: The coded stance (Agree/Disagree) indicating authoritarian vs individualist positions
