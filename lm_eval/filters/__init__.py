@@ -4,7 +4,9 @@ from typing import List
 from lm_eval.api.filter import FilterEnsemble
 from lm_eval.api.registry import get_filter
 
-from . import extraction, selection, transformation
+from . import extraction, selection, transformation, row_filter
+
+from .row_filter import RowFilter
 
 
 def build_filter_ensemble(
