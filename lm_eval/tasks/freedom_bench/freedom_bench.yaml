@@ -14,7 +14,13 @@ doc_to_target: label
 doc_to_choice: ["Disagree", "Agree"]
 
 metric_list:
-  - metric: !function utils.calculate_liberty_scores
+  - metric: personal_liberty_score
+    aggregation: mean
+    higher_is_better: true
+  - metric: economic_liberty_score
+    aggregation: mean
+    higher_is_better: true
+  - metric: liberty_index
     aggregation: mean
     higher_is_better: true
   - metric: acc
@@ -24,3 +30,8 @@ metric_list:
 metadata:
   version: 0.0.1
   description: "Freedom Benchmark evaluating model's stance on personal and economic liberty"
+  task_aliases:
+    personal_liberty_score: "Personal Liberty"
+    economic_liberty_score: "Economic Liberty"
+    liberty_index: "Liberty Index"
+    acc: "Overall Accuracy"
